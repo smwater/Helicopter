@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class PropellerAction : MonoBehaviour
 { 
-    public Rigidbody propeller;
     public Rigidbody helicopter;
     private float accelAngle = 0f;
     private float powerY = 0f;
     private float time = 0f;
-    private const float waitTime = 3f;
+    private const float waitTime = 2f;
     private bool isWKeyOff = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        propeller = GetComponent<Rigidbody>();
+        
     }   
 
     // Update is called once per frame
@@ -67,7 +66,7 @@ public class PropellerAction : MonoBehaviour
         }
 
         // 위의 과정에서 나온 값을 vec에 반영
-        propeller.transform.Rotate(0f, accelAngle % 360, 0f);
+        gameObject.transform.Rotate(0f, accelAngle % 360, 0f);
         helicopter.AddForce(0f, powerY, 0f);
     }
 }
