@@ -5,11 +5,17 @@ using UnityEngine;
 public class PropellerAction : MonoBehaviour
 { 
     public Rigidbody helicopter;
+
+    private bool isWKeyOff = true;
+
     private float accelAngle = 0f;
+    private const float addAngle = 0.005f;
+
     private float powerY = 0f;
+    private const float speedY = 0.002f;
+
     private float time = 0f;
     private const float waitTime = 2f;
-    private bool isWKeyOff = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +32,7 @@ public class PropellerAction : MonoBehaviour
             // 특정 시간에 도달하기 전까진 각도 변화를 증가시킴
             if (time < waitTime)
             {
-                accelAngle += 0.005f;
+                accelAngle += addAngle;
             }
 
             time += Time.deltaTime;
@@ -48,13 +54,13 @@ public class PropellerAction : MonoBehaviour
             // 각도 변화를 감소시킴
             if (accelAngle > 0f)
             {
-                accelAngle -= 0.005f;
+                accelAngle -= addAngle;
             }
 
             // 높이 변화를 감소시킴
             if (powerY > 0f)
             {
-                powerY -= 0.01f;
+                powerY -= speedY;
             }    
         }
 
@@ -62,7 +68,10 @@ public class PropellerAction : MonoBehaviour
         if (time >= waitTime)
         {
             // 높이 변화를 증가시킴
-            powerY += 0.005f;
+            if (powerY <= 1f)
+            {
+                powerY += speedY;
+            }
         }
 
         // 위의 과정에서 나온 값을 vec에 반영
